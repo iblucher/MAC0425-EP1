@@ -1,3 +1,6 @@
+# NOME: Isabela Blucher
+# NUSP: 9298170
+
 # search.py
 # ---------
 # Licensing Information:  You are free to use or extend these projects for
@@ -86,21 +89,28 @@ def depthFirstSearch(problem):
     print "Is the start a goal?", problem.isGoalState(problem.getStartState())
     print "Start's successors:", problem.getSuccessors(problem.getStartState())
 
-    Implementar a DFS aqui com uma pilha para armazenar estados visitados
+    Implementar a DFS aqui com uma pilha e uma lista para armazenar estados visitados.
+    Deve ser uma busca em grafo que evita a expansão de estados já visitados.
     """
-    "*** YOUR CODE HERE ***"
-    print "Start: ", problem.getStartState()
-    print "Is the start a goal?", problem.isGoalState(problem.getStartState())
-    print "Start's successors: ", problem.getSuccessors(problem.getStartState())
 
     from Game import Directions
 
     stack = util.Stack()
     visited = []
+    stack.push(problem.getStartState(), [])  #primeiro estado é colocado na pilha com o caminho vazio
 
-
-
-
+    while not stack.isEmpty():
+        # tirar da pilha o estado atual
+        (state, path) = stack.pop()
+        # verificar se foi visitado (ou adicionar aos visitados)
+        if path not in visited:
+            visited.append(path)
+        # verificar se é um estado meta (retornar)
+            if problem.isGoalState(state):
+                return path
+        # depois disso tudo pegar os vizinhos do atual e expandir (colocar na pilha)
+            for child in problem.getSuccessors(state):
+                stack.push((child[0], path + child[1])
 
 def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
