@@ -132,10 +132,9 @@ def uniformCostSearch(problem):
         if (state not in visited):
             visited.append(state)
             for child in problem.getSuccessors(state):
-                if (child[0] not in visited):
-                    # calculate new priority
-                    cost = problem.getCostOfActions(path + [child[1]])
-                    pqueue.push((child[0], path + [child[1]]), cost)
+                # calculate new priority with given function from util
+                cost = problem.getCostOfActions(path + [child[1]])
+                pqueue.update((child[0], path + [child[1]]), cost)
 
 def nullHeuristic(state, problem=None):
     """
@@ -147,8 +146,21 @@ def nullHeuristic(state, problem=None):
 
 def aStarSearch(problem, heuristic=nullHeuristic):
     """Search the node that has the lowest combined cost and heuristic first."""
-    "*** YOUR CODE HERE ***"
-    util.raiseNotDefined()
+    pqueue = util.PriorityQueue()
+    visited = []
+    pqueue.push((problem.getStartState(), []), 0)
+
+    while (not pqueue.isEmpty()):
+        (state, path) = pqueue.pop()
+        if (problem.isGoalState(state)):
+            return path
+        if (state not in visited):
+            visited.append(state)
+            for child in problem.getSuccessors(state):
+                # calculate new priority with a heuristic function 
+                cost = problem.getCostOfActions(path + [child[1]])
+                h = heuristic(child[0], problem)
+                pqueue.update((child[0], path + [child[1]]), cost + h)
 
 
 def learningRealTimeAStar(problem, heuristic=nullHeuristic):
