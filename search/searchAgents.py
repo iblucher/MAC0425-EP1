@@ -366,27 +366,27 @@ def cornersHeuristic(state, problem):
     admissible (as well as consistent).
     """
     # keep list of unvisited corners and return manhattan distance of the one
-    # that's closest to you with the min() function
+    # that's closest to you
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
-
-    # put all four corners in an unvisited_corners list
     unvisited_corners = []
     visited_corners = state[1]
+    current = state[0]
+    h = 0
+    
     for corner in corners:
         if corner not in visited_corners:
             unvisited_corners.append(corner)
 
-    current = state[0]
-    h = 0
-    while len(unvisited_corners) > 0:
+    while unvisited_corners:
         min_distance = 999999
         for corner in unvisited_corners:
-            distance = min((util.manhattanDistance(current, corner)), min_distance)
+            distance = util.manhattanDistance(current, corner)
             if distance < min_distance:
+                min_distance = distance
                 closest_corner = corner
         current = closest_corner
-        h += distance
+        h += min_distance
         unvisited_corners.remove(closest_corner)
 
     return h
