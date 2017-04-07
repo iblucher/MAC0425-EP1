@@ -1,5 +1,5 @@
-# NOME: Isabela Blucher
-# NUSP: 9298170
+# Nome: Isabela Blucher
+# Numero USP: 9298170
 
 # search.py
 # ---------
@@ -94,7 +94,6 @@ def depthFirstSearch(problem):
     stack.push((problem.getStartState(), []))
 
     while (not stack.isEmpty()):
-        # Nodes are composed of state and path (action)
         (state, path) = stack.pop()
         if (state not in visited):
             visited.append(state)
@@ -132,7 +131,7 @@ def uniformCostSearch(problem):
         if (state not in visited):
             visited.append(state)
             for child in problem.getSuccessors(state):
-                # calculate new priority with given function from util
+                # calculate new priority with given function from class util.py
                 cost = problem.getCostOfActions(path + [child[1]])
                 pqueue.update((child[0], path + [child[1]]), cost)
 
@@ -157,7 +156,7 @@ def aStarSearch(problem, heuristic=nullHeuristic):
         if (state not in visited):
             visited.append(state)
             for child in problem.getSuccessors(state):
-                # calculate new priority with a heuristic function 
+                # calculate new priority with a heuristic function
                 cost = problem.getCostOfActions(path + [child[1]])
                 h = heuristic(child[0], problem)
                 pqueue.update((child[0], path + [child[1]]), cost + h)

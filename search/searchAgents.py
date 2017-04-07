@@ -1,3 +1,6 @@
+# Nome: Isabela Blucher
+# Numero USP: 9298170
+
 # searchAgents.py
 # ---------------
 # Licensing Information:  You are free to use or extend these projects for
@@ -298,11 +301,11 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         visited_corners = state[1]
-        if (state[0] in self.corners):
-            if (not state[0] in visited_corners):
+        if (state[0] in self.corners): # check if current position is a corner
+            if (not state[0] in visited_corners): # check if a corner has been visited
                 visited_corners.append(state[0])
             if (len(visited_corners) == 4):
-                return True
+                return True # goal state found if all 4 corners have been visited
         return False
 
     def getSuccessors(self, state):
@@ -330,6 +333,7 @@ class CornersProblem(search.SearchProblem):
             if not hitsWall:
                 next_state = (nextx, nexty)
                 visited_corners = list(state[1])
+                # check if next state is a corner that has not yet been visited
                 if (next_state in self.corners and next_state not in visited_corners):
                     visited_corners.append(next_state)
                 s = ((next_state, visited_corners), action, 1)
@@ -365,15 +369,15 @@ def cornersHeuristic(state, problem):
     shortest path from the state to a goal of the problem; i.e.  it should be
     admissible (as well as consistent).
     """
-    # keep list of unvisited corners and return manhattan distance of the one
-    # that's closest to you
+    # keep list of unvisited corners and return manhattan distance of the one that is closest
     corners = problem.corners # These are the corner coordinates
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
     unvisited_corners = []
     visited_corners = state[1]
     current = state[0]
     h = 0
-    
+
+    # add all 4 corners to the unvisited_corners list
     for corner in corners:
         if corner not in visited_corners:
             unvisited_corners.append(corner)
@@ -381,7 +385,9 @@ def cornersHeuristic(state, problem):
     while unvisited_corners:
         min_distance = 999999
         for corner in unvisited_corners:
+            # calculate manhattan distance between current position in maze and a given corner
             distance = util.manhattanDistance(current, corner)
+            # check which corner is the closest to pacman's current position
             if distance < min_distance:
                 min_distance = distance
                 closest_corner = corner
