@@ -131,7 +131,7 @@ def uniformCostSearch(problem):
         if (state not in visited):
             visited.append(state)
             for child in problem.getSuccessors(state):
-                # calculate new priority with given function from class util.py
+                # calculate new priority with given function from module util.py
                 cost = problem.getCostOfActions(path + [child[1]])
                 pqueue.update((child[0], path + [child[1]]), cost)
 
